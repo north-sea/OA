@@ -6,9 +6,12 @@
   "author": "mengpeng <pengmeng@yangqianguan.com>",
   "private": true,
   "scripts": {
-    "cz": "git-cz",
+    "cz": "git add . &&git-cz",
     "lint": "eslint --ext .js,.vue ./",
-    "test": "echo \"No test specified\" && exit 0"
+    "test": "echo \"No test specified\" && exit 0",
+    "dev":"quasar dev",
+    "build":"quasar build",
+    "build:pwa":"quasar build -m pwa"
   },
   "dependencies": {
     "@quasar/extras": "^1.0.0",
