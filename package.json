@@ -3,11 +3,11 @@
   "version": "0.0.1",
   "description": "A Quasar Framework app",
   "productName": "Oa For Rae",
-  "author": "mengpeng <pengmeng@yangqianguan.com>",
+  "author": "nsc",
   "private": true,
   "scripts": {
     "cz": "git add . &&git-cz",
-    "lint": "eslint --ext .js,.vue ./",
+    "lint": "eslint --fix --ext .js,.vue ./",
     "test": "echo \"No test specified\" && exit 0",
     "dev":"quasar dev",
     "build":"quasar build",

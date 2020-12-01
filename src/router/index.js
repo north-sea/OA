@@ -1,7 +1,9 @@
-import Vue from 'vue';
-import VueRouter from 'vue-router';
+import Vue from "vue";
+import VueRouter from "vue-router";
 
-import routes from './routes';
+import route from "./routes";
+
+const component = { template: "<router-view/>" };
 
 Vue.use(VueRouter);
 
@@ -14,16 +16,30 @@ Vue.use(VueRouter);
  * with the Router instance.
  */
 
-export default function (/* { store, ssrContext } */) {
+export default function(/* { store, ssrContext } */) {
   const Router = new VueRouter({
     scrollBehavior: () => ({ x: 0, y: 0 }),
-    routes,
+    routes: [
+      {
+        path: "/",
+        component,
+        children: [{ path: "", component: () => import("pages/Index.vue") }]
+      },
+      ...route,
+
+      // Always leave this as last one,
+      // but you can also remove it
+      {
+        path: "*",
+        component: () => import("pages/Error404.vue")
+      }
+    ],
 
     // Leave these as they are and change in quasar.conf.js instead!
     // quasar.conf.js -> build -> vueRouterMode
     // quasar.conf.js -> build -> publicPath
     mode: process.env.VUE_ROUTER_MODE,
-    base: process.env.VUE_ROUTER_BASE,
+    base: process.env.VUE_ROUTER_BASE
   });
 
   return Router;
