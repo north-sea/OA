@@ -66,7 +66,6 @@ export default {
 
 <style lang="scss" scoped>
 .my-menu-link {
-    color: white;
-    background: #f2c037;
+    color: $light-blue ;
 }
 </style>

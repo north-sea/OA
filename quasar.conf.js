@@ -8,7 +8,10 @@ const path = require("path");
 /* eslint-env node */
 /* eslint func-names: 0 */
 /* eslint global-require: 0 */
-
+let target = "http://127.0.0.1:7001";
+if (process.env.PROD) {
+  target = "http://39.107.57.205:7001";
+}
 module.exports = function (/* ctx */) {
   return {
     // https://quasar.dev/quasar-cli/supporting-ts
@@ -83,7 +86,18 @@ module.exports = function (/* ctx */) {
     devServer: {
       https: false,
       port: 8080,
-      open: true // opens browser window automatically
+      open: true, // opens browser window automatically
+      proxy: {
+        // 将所有以/api开头的请求代理到jsonplaceholder
+        "/api": {
+          // target: process.env.DEV ? "http://127.0.0.1:7001" : "http://39.107.57.205:7001",
+          target,
+          changeOrigin: true,
+          pathRewrite: {
+            "^/api": ""
+          }
+        }
+      }
     },
 
     // https://quasar.dev/quasar-cli/quasar-conf-js#Property%3A-framework
