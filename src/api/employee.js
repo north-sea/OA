@@ -1,15 +1,16 @@
-import { Resource } from "@nsea/tools";
+import request from "@/utils/request";
 
-const api = {
-    url: `${process.env.VUE_APP_BASE_API}/employee`,
-    upload: {
-        url: `${process.env.VUE_APP_BASE_API}/employee/list`,
-        method: "post"
-    },
-    getBirthday: {
-        url: `${process.env.VUE_APP_BASE_API}/employee/birth`,
-        method: "post"
-    }
-  };
-
-  export default Resource.create(api);
+export function getEmployeeList(data) {
+  return request({
+    url: "/employee/list",
+    method: "post",
+    data
+  });
+}
+export function getEmployeebirth(data) {
+  return request({
+    url: "/employee/birth",
+    method: "post",
+    data
+  });
+}

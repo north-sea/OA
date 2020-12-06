@@ -1,15 +1,11 @@
 <template>
-  <div id="q-app">
-    <lay-out></lay-out>
+  <div id="app">
+    <router-view />
   </div>
 </template>
-<script>
-import LayOut from "./components/LayOut";
 
+<script>
 export default {
-    name: "App",
-    components: {
-      LayOut
-    }
-};
+  name: 'App'
+}
 </script>

@@ -1,16 +1,24 @@
-import { Resource } from "@nsea/tools";
+import request from "@/utils/request";
 
-const api = {
-  url: "",
-  login: {
-      url: `${process.env.VUE_APP_BASE_API}/login`,
-      method: "get"
-  },
+export function login(params) {
+  return request({
+    url: "/login",
+    method: "get",
+    params
+  });
+}
 
-  getInfo: {
-      url: `${process.env.VUE_APP_BASE_API}/getInfo`,
-      method: "get"
-  }
-};
+export function getInfo(token) {
+  return request({
+    url: "/getInfo",
+    method: "get",
+    params: { token }
+  });
+}
 
-export default Resource.create(api);
+// export function logout() {
+//   return request({
+//     url: "/vue-admin-template/user/logout",
+//     method: "post"
+//   });
+// }

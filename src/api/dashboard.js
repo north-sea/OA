@@ -1,7 +1,9 @@
-import { Resource } from "@nsea/tools";
+import request from "@/utils/request";
 
-const api = {
-  url: `${process.env.VUE_APP_BASE_API}/dashboard`
-};
-
-export default Resource.create(api);
+export function getDashboardInfo(params) {
+  return request({
+    url: "/dashboard",
+    method: "get",
+    params
+  });
+}

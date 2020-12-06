@@ -1,7 +1,9 @@
-import { Resource } from "@nsea/tools";
+import request from "@/utils/request";
 
-const api = {
-  url: "/api/bot"
-};
-
-export default Resource.create(api);
+export function getBotInfo(params) {
+  return request({
+    url: "/bot",
+    method: "get",
+    params
+  });
+}
