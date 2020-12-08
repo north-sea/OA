@@ -115,3 +115,26 @@ export function param2Obj(url) {
   })
   return obj
 }
+
+
+export const evalProp = (value, values) => {
+  if (typeof value === 'function') {
+      return value(values);
+  }
+
+  return value;
+};
+
+const getKeys = (keyString = '') => keyString.split(/\]?[[.]/);
+
+export const pickValue = (obj, keyString) => {
+    const keys = getKeys(keyString);
+    let value = obj;
+    try {
+        keys.forEach(key => (value = value[key]));
+    } catch (err) {
+        value = undefined;
+    }
+
+    return value;
+};

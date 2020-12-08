@@ -47,3 +47,7 @@
 .el-range-separator {
   box-sizing: content-box;
 }
+.el-card{
+  min-height: calc(100vh - 60px);
+  margin: 10px;
+}

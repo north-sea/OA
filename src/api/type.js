@@ -1,8 +1,8 @@
+import request from "@/utils/request";
 
-export function getTypes(params) {
+export function getTypes({ key }) {
   return request({
-    url: "/type",
-    method: "get",
-    params
+    url: `/type/${key}`,
+    method: "get"
   });
 }
