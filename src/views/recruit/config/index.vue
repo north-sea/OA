@@ -18,23 +18,20 @@
                 <el-button class="nsc-btn" size="mini" icon="el-icon-edit" @click="update(row)" />
             </template>
         </nsc-table>
-
     </el-card>
 </template>
 
 <script>
-import {getList} from '@/api/interviewer';
+import {getTypes} from '@/api/type';
 
 import {FormOptions, TableOptions} from './constant/options';
 import EditModal from './modal/edit-modal';
-
-
 export default {
-    name: 'recruit',
+    name: "Config",
     data() {
         return {
             ctx: this,
-            cond: {},
+            cond: {key:"type"},
             record: [],
         }
     },
@@ -49,7 +46,7 @@ export default {
             }).catch((err) => err);
         },
         update(record) {
-            this.$modal.open(EditModal, {record}, {dialogProps: {width: '640px'}}).then(async () => {
+            this.$modal.open(EditModal, {record,list:this.record}, {dialogProps: {width: '640px'}}).then(async () => {
                 await this.list()
                 this.$message.success('修改成功');
             }).catch((err) => err);
@@ -62,7 +59,7 @@ export default {
         },
         async list() {
             const params = this.cond
-            const {data: {body}} = await getList(params);
+            const {data: {body}} = await getTypes(params);
             this.record = body
         },
         onConfirm({values}) {
@@ -73,7 +70,7 @@ export default {
             this.cond = values;
             this.list()
         }
-    },
+    }
 }
 </script>
 

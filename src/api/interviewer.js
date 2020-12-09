@@ -7,3 +7,19 @@ export function getList(params) {
     params
   })
 }
+
+export function insert(data) {
+  return request({
+    url: '/interviewer',
+    method: 'post',
+    data
+  })
+}
+
+export function update(data) {
+  return request({
+    url: '/interviewer',
+    method: 'put',
+    data
+  })
+}

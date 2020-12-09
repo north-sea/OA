@@ -1,26 +1,34 @@
-import {GenderEnum} from "@/constant/enum/type";
+import { GenderEnum ,PositionEnum,ResourceEnum,InrerviewStatusEnum} from "@/constant/enum/type";
+import { getDateTime,getDate } from "@/utils/time";
 
-export const FormOptions={
-    formProps:{
-        inline:true
-    },
-    fieldDefs:[
-        {field:'candidateName',label:'候选人'},
-        {field:'gender',label:'性别',enumType:GenderEnum},
-    ]
-}
+export const FormOptions = {
+  formProps: {
+    inline: true,
+    size:"mini"
+  },
+  fieldDefs: [
+    { field: "candidateName", label: "候选人" },
+    { field: "gender", label: "性别", enumType: GenderEnum },
+    { field: "jobKey", label: "应聘岗位", enumType: PositionEnum },
+    { field: "resource", label: "来源", enumType: ResourceEnum },
+    { field: "status", label: "状态" ,enumType:InrerviewStatusEnum},
+    { field: "phone", label: "手机号"},
 
-export const TableOptions={
-    colDefs:[
-        {field:'candidateName',label:'候选人'},
-        {field:'gender',label:'性别'},
-        {field:'creatorName',label:'创建人'},
-        {field:'jobName',label:'应聘岗位'},
-        {field:'resource',label:'来源'},
-        {field:'rate',label:'评价'},
-        {field:'dateStart',label:'面试时间'},
-        {field:'timeCreated',label:'创建时间'},
-        {field:'timeUpdated',label:'更新时间'},
-        {field:'op',label:'操作'},
-    ]
-}
+  ]
+};
+const itemProps={minWidth:'170px'}
+export const TableOptions = {
+  colDefs: [
+    { field: "candidateName", label: "候选人" },
+    { field: "gender", label: "性别" ,enumType:GenderEnum},
+    { field: "creatorName", label: "创建人" },
+    { field: "jobName", label: "应聘岗位" },
+    { field: "resource", label: "来源" , enumType: ResourceEnum,itemProps:{minWidth:'120px'}},
+    { field: "status", label: "状态" ,enumType:InrerviewStatusEnum},
+    { field: "phone", label: "手机号",itemProps:{minWidth:'120px'}},
+    { field: "dateStart", label: "面试时间" ,filter:getDateTime,itemProps},
+    { field: "timeCreated", label: "创建时间" ,filter:getDateTime,itemProps},
+    { field: "timeUpdated", label: "更新时间" ,filter:getDateTime,itemProps},
+    { field: "op", label: "操作",itemProps:{fixed:'right'} }
+  ]
+};

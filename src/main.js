@@ -5,6 +5,11 @@ import 'normalize.css/normalize.css' // A modern alternative to CSS resets
 import ElementUI from 'element-ui'
 import 'element-ui/lib/theme-chalk/index.css'
 // import locale from 'element-ui/lib/locale/lang/en' // lang i18n
+//dayjs config
+import dayjs from 'dayjs';
+import 'dayjs/locale/zh-cn'
+dayjs.locale('zh-cn')
+
 
 import Nsc from '@/components/nsc'
 import '@/styles/index.scss' // global css

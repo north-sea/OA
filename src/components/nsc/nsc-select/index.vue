@@ -1,6 +1,6 @@
 <template>
     <div>
-        <el-select v-bind="def.props" v-model="compValue" @change="onChange">
+        <el-select v-bind="def.props" v-model="compValue" @change="onChange" clearable>
             <el-option
                 v-for="item in options"
                 :key="item.key"

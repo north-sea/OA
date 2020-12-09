@@ -2,12 +2,13 @@
  * @Author: ruiwang
  * @Date: 2019-11-18 17:12:55
  * @Last Modified by: pengmeng
- * @Last Modified time: 2020-12-07 17:18:53
+ * @Last Modified time: 2020-12-08 19:33:01
  */
 
 import {
     Input,
     DatePicker,
+    TimePicker
 } from 'element-ui';
 
 import NscSelect from '@/components/nsc/nsc-select'

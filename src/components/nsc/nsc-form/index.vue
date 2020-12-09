@@ -1,6 +1,6 @@
 <template>
     <div class="nsc-form">
-        <el-form ref="form" v-bind="{...formOptions.formProps}" :model="values" label-width="80px">
+        <el-form ref="form" v-bind="{...formOptions.formProps}" :model="values">
             <template v-for="def in formOptions.fieldDefs">
                 <el-form-item 
                     v-if="!evalProp(def.hide, getFormCtx())"
@@ -42,18 +42,23 @@
                         取消
                     </el-button>
                 </slot>
+                <slot name="extraBtns" v-bind="{...getFormCtx()}" ></slot>
             </el-form-item>
         </el-form>
     </div>
 </template>
 
 <script>
-import {evalProp, pickValue} from '@/utils';
+import {evalProp, pickValue, enumOptionsConvert} from '@/utils';
 import FieldMap from './constant/field-map';
 import DefType from './constant/def-type';
 
 export default {
     name: 'NscForm',
+    model:{
+        prop: 'values',
+        event: 'change'
+    },
     props: {
         ctx: {
             type: Object,
@@ -70,13 +75,16 @@ export default {
         autoSearch: {
             type: Boolean,
             default: true
-        }
+        },
     },
 
     computed: {
         formOptions() {
             return this.options
         }
+    },
+    async created() {
+        await enumOptionsConvert(this.options)
     },
     mounted() {
         this.form = this.$refs.form;
@@ -93,6 +101,10 @@ export default {
             const {
                 ctx, form, values
             } = this;
+
+            Object.keys(values).forEach(key => {
+                if (!values[key]) delete values[key]
+            });
 
             return {
                 ctx: ctx || this.$parent,
@@ -123,7 +135,7 @@ export default {
                     value: pickValue(values, field),
                     def
                 };
-                this.$emit('change', params);
+                this.$emit('change', values);
 
                 if (onChange) {
                     onChange(params);
@@ -137,11 +149,6 @@ export default {
 
             if (enumType) {
                 return FieldMap[DefType.select];
-            }
-
-            const {date, dateTime} = DefType;
-            if ([date, dateTime].includes(type)) {
-                return FieldMap[DefType.date];
             }
 
             return FieldMap[type] || FieldMap.text;
@@ -164,6 +171,7 @@ export default {
 
             return {
                 ...props,
+                type,
                 def: {
                     ...def,
                     props
@@ -175,7 +183,7 @@ export default {
             const formCtx = {...this.getFormCtx(), values};
             this.form.resetFields();
             this.$emit('reset', formCtx);
-            this.$emit('change', formCtx);
+            this.$emit('change', values);
         },
         onConfirm() {
 
@@ -193,7 +201,4 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.el-form-item {
-    // max-width: 256px;
-}
 </style>

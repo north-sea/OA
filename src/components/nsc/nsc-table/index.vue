@@ -1,25 +1,6 @@
-<template>
-    <div class="nsc-table">
-        <el-table ref="table" v-bind="{...tableOptions.props}" :data="records">
-            <template v-for="def in tableOptions.colDefs">
-                <el-table-column
-                    :key="def.field"
-                    :prop="def.field"
-                    :label="def.label"
-                    v-bind="{
-                        ...tableOptions.commonProps,
-                        ...def.itemProps,
-                    }">
-                    <template v-if="hasSlot(def.field)" #[def.field]="scope">
-                        <VNodes :vnodes="renderSlot(def,scope)" />
-                    </template>
-                </el-table-column>
-            </template>
-        </el-table>
-    </div>
-</template>
-
 <script>
+import {evalProp, enumOptionsConvert} from '@/utils';
+
 export default {
     name: "NscTable",
     props: {
@@ -43,21 +24,64 @@ export default {
             return this.options
         }
     },
+    async created() {
+        await enumOptionsConvert(this.options, 'colDefs')
+    },
     methods: {
         hasSlot(name) {
             const {$slots, $scopedSlots} = this;
             return !!$slots[name]
                 || !!$scopedSlots[name];
         },
+        getFormatter(props) {
+            let {
+                filter, map , enumType
+            } = props;
 
-        renderSlot({field}, scope) {
-            console.log(scope)
-            const {$slots, $scopedSlots} = this;
-            const render = $scopedSlots[field];
-            return render({...scope})
-        },
+            return (row, column, cellValue, index) => {
+                if (filter) return filter(cellValue);
+                if (map) return map[cellValue];
+                if (enumType) return enumType.MAP[cellValue];
+                return cellValue
+            }
+        }
     },
+    render() {
+        const {records, tableOptions: {props, colDefs, commonProps}, $scopedSlots} = this;
+        const tableProps = {
+            props: {
+                ...props,
+                data: records
+            }
+        }
+        return (
+            <div class="nsc-table">
+                <el-table {...tableProps} ref="table">
+                    {
+                        colDefs.map(def => {
+                            const {field, label, itemProps = {}} = def;
+                            const hasSlot = this.hasSlot(field);
+                            const columnProps = {
+                                props: {
+                                    prop: field,
+                                    label,
+                                    key: field,
+                                    ...commonProps,
+                                    formatter: this.getFormatter(def),
+                                    ...itemProps,
+                                },
+                            }
 
+                            if (hasSlot) columnProps.scopedSlots = {default: $scopedSlots[field]}
+
+                            return (<el-table-column {...columnProps} />)
+                        })
+                    }
+                </el-table>
+
+            </div>
+        )
+    }
 }
 </script>
 

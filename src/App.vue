@@ -1,6 +1,7 @@
 <template>
   <div id="app">
     <router-view />
+    <nsc-modal />
   </div>
 </template>
 

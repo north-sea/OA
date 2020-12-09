@@ -1,6 +1,6 @@
 export default {
     text: 'text',
     date: 'date',
-    dateTime: 'dateTime',
+    dateTime: 'datetime',
     select: 'select',
 };
