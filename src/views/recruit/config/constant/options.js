@@ -7,7 +7,6 @@ export const FormOptions = {
   },
   fieldDefs: [
     { field: "key", label: "配置名称" ,enumType:TypeEnum},
-
   ]
 };
 export const TableOptions = {

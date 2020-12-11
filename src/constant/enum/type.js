@@ -1,5 +1,5 @@
 import { Enum } from "@nsea/tools";
-import { getTypes } from "@/api/type";
+import { getTypes, getAllTypes } from "@/api/type";
 
 export const GenderEnum = Enum.query(() => getTypes({ key: "gender" }), {
   queryOnce: true,
@@ -35,7 +35,7 @@ export const InrerviewStatusEnum = Enum.query(
     valueField: "key"
   }
 );
-export const TypeEnum = Enum.query(() => getTypes({ key: "type" }), {
+export const TypeEnum = Enum.query(() => getAllTypes(), {
   queryOnce: true,
   textField: "label",
   valueField: "key"

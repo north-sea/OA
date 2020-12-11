@@ -1,9 +1,8 @@
 import request from "@/utils/request";
 
-export function getBotFriends(params) {
+export function getCalendarData() {
   return request({
-    url: "/bot/friends",
+    url: "/calendar",
     method: "get",
-    params
   });
 }

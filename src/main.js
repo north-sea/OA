@@ -6,10 +6,16 @@ import ElementUI from 'element-ui'
 import 'element-ui/lib/theme-chalk/index.css'
 // import locale from 'element-ui/lib/locale/lang/en' // lang i18n
 //dayjs config
-import dayjs from 'dayjs';
+import dayjs from "dayjs";
+import weekday from 'dayjs/plugin/weekday';
+import localeData from 'dayjs/plugin/localeData';
+
 import 'dayjs/locale/zh-cn'
+
 dayjs.locale('zh-cn')
 
+dayjs.extend(weekday);
+dayjs.extend(localeData);
 
 import Nsc from '@/components/nsc'
 import '@/styles/index.scss' // global css

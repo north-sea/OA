@@ -8,15 +8,15 @@
             @reset="onReset"
         >
         <template #extraBtns>
-            <el-button class="nsc-form-btn" @click="create">
-                新建
-            </el-button>
-            <el-button :loading="downloadLoading"  class="nsc-form-btn" type="primary" icon="el-icon-document" @click="handleDownload">
-                导出 Excel
+            <el-button class="nsc-form-btn" @click="sync">
+                同步
             </el-button>
         </template>
         </nsc-form>
         <nsc-table :records="record" :options="$options.TableOptions" >
+            <template #avatar="{row:{avatar}}">
+                <el-avatar shape="square" size="medium" :src="avatar"></el-avatar>
+            </template>
             <template #op="{row}">
                 <el-button class="nsc-btn" size="mini" icon="el-icon-edit" @click="update(row)" />
 
@@ -31,33 +31,26 @@
 </template>
 
 <script>
-import {getList, remove} from '@/api/interviewer';
-import {parseTime} from '@/utils'
+import {getBotFriends} from '@/api/bot';
 
 import {FormOptions, TableOptions} from './constant/options';
-import EditModal from './modal/edit-modal';
-
 
 export default {
-    name: 'recruit',
+    name: 'BotFriends',
     data() {
         return {
             ctx: this,
-            downloadLoading: false,
             cond: {},
             record: [],
-            autoWidth: true,
         }
     },
     FormOptions,
     TableOptions,
 
     methods: {
-        create() {
-            this.$modal.open(EditModal, {}, {dialogProps: {width: '640px'}}).then(async () => {
-                await this.list()
-                this.$message.success('新建成功');
-            }).catch((err) => err);
+        async sync() {
+            const {data: {body}} = await getBotFriends({isSync:true});
+            this.record = body
         },
         update(record) {
             this.$modal.open(EditModal, {record}, {dialogProps: {width: '640px'}}).then(async () => {
@@ -72,7 +65,7 @@ export default {
         },
         async list() {
             const params = this.cond
-            const {data: {body}} = await getList(params);
+            const {data: {body}} = await getBotFriends(params);
             this.record = body
         },
         onConfirm({values}) {
@@ -82,17 +75,6 @@ export default {
         onReset({values}) {
             this.cond = values;
             this.list()
-        },
-        handleDownload() {
-            this.downloadLoading = true
-            import('@/vendor/Export2Excel').then(excel => {
-                excel.export_json_to_excel({
-                    options: TableOptions,
-                    data: this.record,
-                    filename: this.$route.name,
-                })
-                this.downloadLoading = false
-            })
         },
     },
 }

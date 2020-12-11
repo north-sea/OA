@@ -23,3 +23,11 @@ export function update(data) {
     data
   })
 }
+
+export function remove(data) {
+  return request({
+    url: '/interviewer',
+    method: 'delete',
+    data
+  })
+}

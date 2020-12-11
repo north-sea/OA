@@ -3,8 +3,8 @@
     <hamburger :is-active="sidebar.opened" class="hamburger-container" @toggleClick="toggleSideBar" />
 
     <breadcrumb class="breadcrumb-container" />
-
     <div class="right-menu">
+      <NscCalendar />
       <el-dropdown class="avatar-container" trigger="click">
         <div class="avatar-wrapper">
           <img :src="avatar+'?imageView2/1/w/80/h/80'" class="user-avatar">
@@ -35,11 +35,13 @@
 import { mapGetters } from 'vuex'
 import Breadcrumb from '@/components/Breadcrumb'
 import Hamburger from '@/components/Hamburger'
+import NscCalendar from '@/components/nsc/nsc-calendar'
 
 export default {
   components: {
     Breadcrumb,
-    Hamburger
+    Hamburger,
+    NscCalendar
   },
   computed: {
     ...mapGetters([

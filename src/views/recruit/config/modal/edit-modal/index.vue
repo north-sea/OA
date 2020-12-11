@@ -1,18 +1,11 @@
 <template>
-    <nsc-form 
-        :ctx="ctx"
-        :options="FormOptions" 
-        v-model="cond"
-        @confirm="onConfirm"
-    />
+    <JsonEditor :value="cond" @confirm="onConfirm"></JsonEditor>
 </template>
 
 <script>
-import {mapGetters} from 'vuex';
-
 import modal from '@/mixin/modal'
-import {insert, update} from '@/api/interviewer'
-import {genFormOptions} from './constant/options'
+import {insert, update} from '@/api/type'
+import JsonEditor from '@/components/JsonEditor'
 export default {
 
     name: "EditModal",
@@ -21,14 +14,13 @@ export default {
     dialogProps: {
         title: '配置信息',
     },
+    components: {
+        JsonEditor,
+    },
     props: {
         record: {
             type: Object,
             default: () => ({})
-        },
-        list: {
-            type: Array,
-            default: () => ([])
         },
     },
     data() {
@@ -40,19 +32,14 @@ export default {
         }
     },
     computed: {
-        ...mapGetters(['id', 'name']),
-
         isEdit() {
             return !!this.record._id
         },
-
-        FormOptions() {
-            return genFormOptions(this.isEdit)
-        }
     },
     methods: {
-        async onConfirm({values}) {
-            const {id, name,isEdit} = this;
+        async onConfirm(values) {
+            const {isEdit} = this;
+            console.log(values)
             if (isEdit) {
                 await update({...values})
             } else {

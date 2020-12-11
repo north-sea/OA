@@ -16,13 +16,14 @@
         <nsc-table :records="record" :options="$options.TableOptions" >
             <template #op="{row}">
                 <el-button class="nsc-btn" size="mini" icon="el-icon-edit" @click="update(row)" />
+                <el-button class="nsc-btn" type="danger" size="mini" icon="el-icon-delete" @click="onDelete(row)" />
             </template>
         </nsc-table>
     </el-card>
 </template>
 
 <script>
-import {getTypes} from '@/api/type';
+import {getAllTypes, remove} from '@/api/type';
 
 import {FormOptions, TableOptions} from './constant/options';
 import EditModal from './modal/edit-modal';
@@ -31,7 +32,7 @@ export default {
     data() {
         return {
             ctx: this,
-            cond: {key:"type"},
+            cond: {},
             record: [],
         }
     },
@@ -45,21 +46,23 @@ export default {
                 this.$message.success('新建成功');
             }).catch((err) => err);
         },
+
         update(record) {
-            this.$modal.open(EditModal, {record,list:this.record}, {dialogProps: {width: '640px'}}).then(async () => {
+            this.$modal.open(EditModal, {record, list: this.record}, {dialogProps: {width: '640px'}}).then(async () => {
                 await this.list()
                 this.$message.success('修改成功');
             }).catch((err) => err);
         },
-        handleEdit(index, row) {
-            console.log(index, row);
+
+        async onDelete({_id}) {
+            await remove({_id});
+            await this.list()
+            this.$message.success('删除成功');
         },
-        handleDelete(index, row) {
-            console.log(index, row);
-        },
+
         async list() {
             const params = this.cond
-            const {data: {body}} = await getTypes(params);
+            const {data: {body}} = await getAllTypes(params);
             this.record = body
         },
         onConfirm({values}) {
