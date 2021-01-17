@@ -3,6 +3,7 @@ import Router from 'vue-router'
 import hr from './modules/hr';
 import recruit from './modules/recruit';
 import bot from './modules/bot';
+import activity from './modules/activity';
 
 Vue.use(Router)
 
@@ -64,7 +65,7 @@ export const constantRoutes = [
  * the routes that need to be dynamically loaded based on user roles
  */
 export const asyncRoutes = [
-  hr,recruit,bot,
+  hr,recruit,bot,activity,
 
   // 404 page must be placed at the end !!!
   { path: '*', redirect: '/404', hidden: true }

@@ -31,7 +31,7 @@
 </template>
 
 <script>
-import {getList, remove} from '@/api/interviewer';
+import {getList, remove} from '@/api/activity/qrcode';
 
 import {FormOptions, TableOptions} from './constant/options';
 import EditModal from './modal/edit-modal';
@@ -98,4 +98,5 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+
 </style>
