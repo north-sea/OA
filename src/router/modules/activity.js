@@ -5,7 +5,7 @@ export default {
   component: Layout,
   name: "活动管理",
   alwaysShow: true,
-  meta: { title: "活动管理", icon: "el-icon-user" },
+  meta: { title: "活动管理", icon: "el-icon-user",roles:['customer','admin'] },
   children: [
     {
       path: "qrcode",

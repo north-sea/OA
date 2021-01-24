@@ -4,7 +4,22 @@
         :options="FormOptions" 
         v-model="cond"
         @confirm="onConfirm"
-    />
+    >
+        <template #qrcode>
+	        <el-image v-if="cond.qrcode" :src="cond.qrcode" fit="fill"></el-image>
+            <el-button class="nsc-form-btn" @click="toggleShow">
+                上传二维码
+            </el-button>
+            <nsc-upload
+                @crop-success="cropSuccess"
+                @crop-upload-fail="cropUploadFail"
+                v-model="show"
+                :width="300"
+                :height="300"
+                :no-circle="true"
+                img-format="png"></nsc-upload>
+        </template>
+    </nsc-form>
 </template>
 
 <script>
@@ -32,7 +47,8 @@ export default {
         const cond = record ? {...record} : {}
         return {
             ctx: this,
-            cond
+            cond,
+            show: false,
         }
     },
     computed: {
@@ -47,8 +63,20 @@ export default {
         }
     },
     methods: {
+        toggleShow() {
+            this.show = !this.show;
+        },
+        cropSuccess(imgDataUrl, field) {
+            console.log('-------- crop success --------');
+            this.$set(this.cond,'qrcode',imgDataUrl)
+        },
+        cropUploadFail(status, field) {
+            console.log('-------- upload fail --------');
+            console.log(status);
+            console.log('field: ' + field);
+        },
         async onConfirm({values}) {
-            const {id, name,isEdit} = this;
+            const {id, name, isEdit} = this;
             if (isEdit) {
                 await update({...values, creatorId: id, creatorName: name})
             } else {

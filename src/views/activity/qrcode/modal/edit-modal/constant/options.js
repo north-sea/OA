@@ -7,8 +7,9 @@ export const genFormOptions = isEdit => {
     },
     fieldDefs: [
       { field: "name", label: "姓名" },
-    { field: "weixin", label: "微信号" },
-      { field: "newCustomerNum", label: "新增数量", disabled: isEdit },
+      { field: "weixin", label: "微信号" },
+      { field: "qrcode", label: "二维码"},
+      { field: "newCustomerNum", label: "新增数量", disabled: isEdit }
     ]
   };
 };

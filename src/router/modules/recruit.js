@@ -5,7 +5,7 @@ export default {
   component: Layout,
   name: "招聘管理",
   alwaysShow: true,
-  meta: { title: "招聘管理", icon: "el-icon-user" },
+  meta: { title: "招聘管理", icon: "el-icon-user" ,roles:['admin']},
   children: [
     {
       path: "info",
