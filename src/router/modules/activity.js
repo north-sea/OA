@@ -14,6 +14,14 @@ export default {
       meta: {
         title: "二维码管理",
       }
+    },
+    {
+      path: "customer",
+      name: "客户管理",
+      component: () => import("@/views/activity/customer"),
+      meta: {
+        title: "客户管理",
+      }
     }
   ]
 };
