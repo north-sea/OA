@@ -7,6 +7,9 @@
 
 <script>
 export default {
-  name: 'App'
-}
+    name: 'App',
+    mounted() {
+        let res = null ?? 1;
+    },
+};
 </script>
